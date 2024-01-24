@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/peminjaman_controller.dart';
 
 class PeminjamanView extends GetView<PeminjamanController> {
@@ -13,12 +14,22 @@ class PeminjamanView extends GetView<PeminjamanController> {
         title: const Text('PeminjamanView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'PeminjamanView is working',
-          style: TextStyle(fontSize: 20),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Get.toNamed(Routes.PEMINJAMAN),
+          child: Icon(Icons.add),//
         ),
-      ),
+        body: controller.obx((state) => ListView.separated(
+      itemCount: state!.length,
+      itemBuilder: (context, index){
+        return ListTile(
+          title: Text("judul${state[index].book?.judul}") ,
+          subtitle: Text("Penulis ${state[index].user?.nama}"),
+        );
+      },
+      separatorBuilder: (context, index){
+        return Divider();
+      },
+    ),)
     );
   }
 }
